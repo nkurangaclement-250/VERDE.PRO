@@ -1,0 +1,302 @@
+/* ============ Design tokens ============ */
+  :root{
+    --clr-bg:#0a1628;
+    --clr-surface:#0d1f3c;
+    --clr-rail:#12315f;
+    --clr-rail-hi:#1a3d73;
+    --clr-field:#1b3a70;
+    --clr-field-hi:#1f4380;
+    --clr-brand:#4d7ef8;
+    --clr-brand-soft:#3a63c9;
+    --clr-fg:#f4f7fc;
+    --clr-fg-dim:#a9bcdc;
+    --clr-fg-faint:#6f85ac;
+    --clr-hairline:rgba(255,255,255,0.08);
+    --grad-brand:linear-gradient(135deg,#5b8bff,#2c47a8);
+    --grad-avatar:linear-gradient(135deg,#7aa2ff,#4d63d6);
+    --ff-base:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --ease-pop:cubic-bezier(.34,1.56,.64,1);
+    --rail-w:272px;
+  }
+
+  /* ============ Reset ============ */
+  *,*::before,*::after{ box-sizing:border-box; }
+  body,h1,h2,h3,p,ul,input,button{ margin:0; padding:0; }
+  button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+  input{ font:inherit; color:inherit; }
+
+  body{
+    height:100vh;
+    background:var(--clr-bg);
+    font-family:var(--ff-base);
+    color:var(--clr-fg);
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+  }
+
+  /* ============ Shell: CSS Grid instead of flex wrapper ============ */
+  .shell{
+    display:grid;
+    grid-template-columns:var(--rail-w) 1fr;
+    height:100vh;
+    background:var(--clr-surface);
+  }
+
+  @media (max-width:720px){
+    .shell{ grid-template-columns:1fr; }
+    .rail{ display:none; }
+  }
+
+  /* ============ Left rail ============ */
+  .rail{
+    background:var(--clr-rail);
+    display:grid;
+    grid-template-rows:auto auto auto 1fr auto;
+    row-gap:4px;
+    padding:22px 16px;
+  }
+
+  .rail-brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:6px 10px 26px;
+    cursor:pointer;
+  }
+  .rail-brand:hover .rail-brand__badge{
+    transform:rotate(-8deg) scale(1.08);
+    box-shadow:0 4px 18px -2px rgba(77,126,248,.55);
+  }
+  .rail-brand:hover .rail-brand__badge::before{
+    opacity:1;
+    transform:scale(1);
+  }
+  .rail-brand:hover .rail-brand__label{ color:#cfe0ff; }
+
+  .rail-brand__badge{
+    position:relative;
+    width:30px; height:30px;
+    border-radius:9px;
+    background:var(--grad-brand);
+    display:grid; place-items:center;
+    flex-shrink:0;
+    transition:transform .35s var(--ease-pop), box-shadow .35s ease;
+  }
+  .rail-brand__badge::before{
+    content:"";
+    position:absolute; inset:-4px;
+    border-radius:12px;
+    border:1px solid rgba(93,140,255,.5);
+    opacity:0;
+    transform:scale(.85);
+    transition:opacity .35s ease, transform .35s ease;
+  }
+  .rail-brand__badge svg{ width:17px; height:17px; position:relative; z-index:1; }
+
+  .rail-brand__label{
+    font-size:16px;
+    font-weight:600;
+    transition:color .2s ease;
+  }
+
+  .rail-menu{ display:grid; row-gap:2px; }
+
+  .rail-menu__link{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:9px 12px;
+    border-radius:9px;
+    font-size:14.5px;
+    transition:background .15s ease;
+  }
+  .rail-menu__link:hover{ background:var(--clr-rail-hi); }
+  .rail-menu__link svg{ width:17px; height:17px; opacity:.9; flex-shrink:0; }
+  .rail-menu__link[data-primary]{ background:var(--clr-field); }
+  .rail-menu__link[data-primary]:hover{ background:var(--clr-field-hi); }
+
+  .rail-history{ overflow:hidden; }
+  .rail-history__heading{
+    font-size:12px;
+    font-weight:600;
+    color:var(--clr-fg-faint);
+    text-transform:uppercase;
+    letter-spacing:.6px;
+    padding:22px 12px 8px;
+  }
+  .rail-history__entry{
+    padding:8px 12px;
+    border-radius:9px;
+    font-size:13.5px;
+    color:var(--clr-fg-dim);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  .rail-history__entry:hover{ background:var(--clr-rail-hi); color:var(--clr-fg); }
+
+  .rail-account{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .rail-account:hover{ background:var(--clr-rail-hi); }
+  .rail-account__avatar{
+    width:28px; height:28px;
+    border-radius:50%;
+    background:var(--grad-avatar);
+    display:grid; place-items:center;
+    font-size:12px;
+    font-weight:600;
+    flex-shrink:0;
+  }
+  .rail-account__name{ font-size:13px; color:var(--clr-fg-dim); }
+
+  /* ============ Right pane ============ */
+  .pane{
+    display:grid;
+    grid-template-rows:auto 1fr auto auto;
+    min-width:0;
+  }
+
+  .pane-header{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:8px;
+    padding:18px 28px;
+  }
+  .pane-header__btn{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:8px 14px;
+    border-radius:8px;
+    font-size:14px;
+    color:var(--clr-fg-dim);
+    transition:background .15s ease, color .15s ease;
+  }
+  .pane-header__btn:hover{ background:var(--clr-rail-hi); color:var(--clr-fg); }
+  .pane-header__btn svg{ width:16px; height:16px; }
+  .pane-header__btn[data-emphasis]{
+    background:var(--clr-field);
+    color:var(--clr-fg);
+  }
+  .pane-header__btn[data-emphasis]:hover{ background:var(--clr-field-hi); }
+
+  .pane-hero{
+    display:grid;
+    justify-items:center;
+    align-content:center;
+    padding:24px;
+    text-align:center;
+  }
+  .pane-hero__badge{
+    width:56px; height:56px;
+    border-radius:16px;
+    background:var(--grad-brand);
+    display:grid; place-items:center;
+    margin-bottom:22px;
+    cursor:pointer;
+    transition:transform .4s var(--ease-pop), box-shadow .4s ease;
+  }
+  .pane-hero__badge:hover{
+    transform:rotate(-6deg) scale(1.06);
+    box-shadow:0 8px 24px -4px rgba(77,126,248,.55);
+  }
+  .pane-hero__badge svg{ width:26px; height:26px; }
+  .pane-hero__title{
+    font-size:26px;
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .pane-hero__subtitle{
+    font-size:14.5px;
+    color:var(--clr-fg-faint);
+    max-width:360px;
+    line-height:1.5;
+  }
+
+  .pane-composer{
+    padding:0 28px 28px;
+    display:flex;
+    justify-content:center;
+  }
+  .composer-box{
+    width:100%;
+    max-width:760px;
+    background:var(--clr-field);
+    border:1px solid var(--clr-hairline);
+    border-radius:20px;
+    padding:14px 14px 10px 18px;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .composer-box:focus-within{
+    background:var(--clr-field-hi);
+    border-color:var(--clr-brand-soft);
+  }
+  .composer-box__row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .composer-box__plus{
+    width:30px; height:30px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.18);
+    color:var(--clr-fg-dim);
+    display:grid; place-items:center;
+    flex-shrink:0;
+    transition:background .15s ease, color .15s ease;
+  }
+  .composer-box__plus:hover{ background:rgba(255,255,255,.1); color:var(--clr-fg); }
+  .composer-box__plus svg{ width:16px; height:16px; }
+
+  .composer-box__field{
+    flex:1;
+    background:transparent;
+    border:0;
+    outline:none;
+    color:var(--clr-fg);
+    font-size:15.5px;
+  }
+  .composer-box__field::placeholder{ color:var(--clr-fg-faint); }
+
+  .composer-box__tools{
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .tool-btn{
+    width:34px; height:34px;
+    border-radius:50%;
+    color:var(--clr-fg-dim);
+    display:grid; place-items:center;
+    transition:background .15s ease, color .15s ease;
+  }
+  .tool-btn:hover{ background:rgba(255,255,255,.1); color:var(--clr-fg); }
+  .tool-btn svg{ width:18px; height:18px; }
+  .tool-btn[data-send]{ background:var(--clr-brand); color:#fff; }
+  .tool-btn[data-send]:hover{ background:#3f6be0; }
+
+  .pane-footnote{
+    padding:0 4px 22px;
+    font-size:11.5px;
+    color:var(--clr-fg-faint);
+    text-align:center;
+  }
+
+  .rail::-webkit-scrollbar{ width:6px; }
+  .rail::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.15); border-radius:3px; }
+
+  @media (max-width:720px){
+    .pane-hero{ padding:16px; }
+    .pane-hero__title{ font-size:21px; }
+    .pane-composer{ padding:0 14px 18px; }
+  }
