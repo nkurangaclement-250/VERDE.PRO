@@ -12,3 +12,5 @@ alembic==1.13.2
 aiofiles==24.1.0
 
 pypdf>=5.0.0
+email-validator
+openai
