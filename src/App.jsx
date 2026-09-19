@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import "./App.css";
-import AuthScreen from "./AuthScreen";
+import AuthScreen from "./authscreen";
 
 const API_BASE = "http://127.0.0.1:8000";
 
